@@ -26,6 +26,16 @@ export const SearchInput = styled.div`
 `;
 
 export const ListContent = styled.div`
+  .loading {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    top: -10px;
+    font-size: 40px;
+  }
   .item-card {
     border-radius: 5px;
     border-left: 5px solid #56b585;

@@ -2,16 +2,22 @@ import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { ListContent } from '../style';
 import { defautStore } from '../reducer';
+import Helper from '../../helper';
+import Moment from 'react-moment';
+
+Moment.globalLocal = true;
+const helper = new Helper();
 class List extends PureComponent {
   componentWillMount = () => {
     const { dispatch } = this.props;
     dispatch(defautStore());
   };
   render() {
-    const { listSearch } = this.props;
+    const { listSearch, loading } = this.props;
     return (
       <ListContent>
-        {listSearch &&
+        {loading && <div className="loading">Loading....</div>}
+        {!loading &&
           listSearch.map((item, index) => {
             return (
               <div key={item.id} className="item-card">
@@ -22,9 +28,9 @@ class List extends PureComponent {
                 </h3>
                 <span className="title">{item.beneficiary_name}</span>
                 <span className="content">
-                  {item.amount}
+                  {helper.checkFormatNominal(item.amount)}
                   <i className="fa fa-circle" aria-hidden="true"></i>
-                  {item.completed_at}
+                  <Moment parse="YYYY-MM-DD HH:mm">{item.completed_at}</Moment>
                 </span>
                 <span className="status">{item.status}</span>
               </div>
@@ -36,8 +42,8 @@ class List extends PureComponent {
 }
 
 const mapStateToProps = ({ listTransaction }) => ({
-  list: listTransaction.list,
   listSearch: listTransaction.listSearch,
+  loading: listTransaction.loading,
 });
 
 const mapDispatchToProps = (dispatch) => ({ dispatch });
