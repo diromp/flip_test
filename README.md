@@ -12,3 +12,4 @@ Tech :
 - Redux Js
 - Styled Component
 - Axios
+- Moment.Js
